@@ -72,7 +72,11 @@ const EditOrderPage: React.FC = () => {
     validationSchema: Yup.object({
       customer: Yup.object().nullable().required('Customer is required'),
       status: Yup.string().required('Status is required'),
-      items: Yup.array().min(1, 'Order must have at least one item').required(),
+      items: Yup.array().when([], {
+        is: () => existingItemsRef.current.length === 0,
+        then: schema => schema.min(1, 'Order must have at least one item').required(),
+        otherwise: schema => schema.notRequired(),
+      }),
     }),
     onSubmit: async (values) => {
       if (!id) return;
@@ -232,7 +236,7 @@ const EditOrderPage: React.FC = () => {
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
     }}>
-      {/* Header Section */}
+
       <Fade in timeout={500}>
         <Paper 
           elevation={0} 
@@ -286,7 +290,7 @@ const EditOrderPage: React.FC = () => {
         </Paper>
       </Fade>
 
-      {/* Alerts */}
+
       {error && (
         <Fade in>
           <Alert 
@@ -312,7 +316,7 @@ const EditOrderPage: React.FC = () => {
 
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={3}>
-          {/* Customer & Status Section */}
+
           <Grid item xs={12}>
             <Zoom in timeout={600}>
               <Card elevation={0} sx={{ borderRadius: 3, overflow: 'visible' }}>
@@ -383,7 +387,7 @@ const EditOrderPage: React.FC = () => {
             </Zoom>
           </Grid>
 
-          {/* Add Products Section */}
+
           <Grid item xs={12}>
             <Zoom in timeout={700}>
               <Card elevation={0} sx={{ borderRadius: 3 }}>
@@ -444,7 +448,6 @@ const EditOrderPage: React.FC = () => {
             </Zoom>
           </Grid>
 
-          {/* Order Items Section */}
           <Grid item xs={12}>
             <Zoom in timeout={800}>
               <Card elevation={0} sx={{ borderRadius: 3 }}>
@@ -550,7 +553,7 @@ const EditOrderPage: React.FC = () => {
             </Zoom>
           </Grid>
 
-          {/* Action Buttons */}
+   
           <Grid item xs={12}>
             <Zoom in timeout={900}>
               <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
@@ -593,3 +596,5 @@ const EditOrderPage: React.FC = () => {
 };
 
 export default EditOrderPage;
+
+
