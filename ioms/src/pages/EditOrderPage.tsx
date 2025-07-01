@@ -2,12 +2,21 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box, Typography, CircularProgress, Paper, Grid, Button,
-  Stack, TextField, MenuItem, Autocomplete, IconButton, List, ListItem, ListItemText, Divider
+  Stack, TextField, MenuItem, Autocomplete, IconButton, List, ListItem, ListItemText, 
+  Divider, Card, CardContent, Chip, Alert, Fade, Zoom, Avatar, 
+  Tooltip, InputAdornment, alpha
 } from '@mui/material';
 import { fetchOrderDeatil, updateOrder, fetchCustomer, fetchProducts } from '../services/api';
 import type { Customer } from '../services/api';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
+import PersonIcon from '@mui/icons-material/Person';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import SearchIcon from '@mui/icons-material/Search';
+import AddIcon from '@mui/icons-material/Add';
+import SaveIcon from '@mui/icons-material/Save';
+import EditIcon from '@mui/icons-material/Edit';
+import InventoryIcon from '@mui/icons-material/Inventory';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -34,12 +43,19 @@ interface FormValues {
   items: OrderItem[];
 }
 
+const statusConfig = {
+  'PE': { label: 'Pending', color: 'warning' as const, icon: '⏳' },
+  'CO': { label: 'Completed', color: 'success' as const, icon: '✅' },
+  'CA': { label: 'Cancelled', color: 'error' as const, icon: '❌' },
+};
+
 const EditOrderPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const [customerOptions, setCustomerOptions] = useState<Customer[]>([]);
   const [productOptions, setProductOptions] = useState<ProductInfo[]>([]);
@@ -50,7 +66,7 @@ const EditOrderPage: React.FC = () => {
   const formik = useFormik<FormValues>({
     initialValues: {
       customer: null,
-      status: 'pending',
+      status: 'PE',
       items: [],
     },
     validationSchema: Yup.object({
@@ -61,6 +77,7 @@ const EditOrderPage: React.FC = () => {
     onSubmit: async (values) => {
       if (!id) return;
       try {
+        setError(null);
         const mergedItems = [
           ...existingItemsRef.current.filter(i => i.quantity > 0),
           ...values.items.filter(i => i.quantity > 0),
@@ -77,8 +94,8 @@ const EditOrderPage: React.FC = () => {
 
         console.log('Final Payload:', payload);
         await updateOrder(id, payload);
-        alert('Order updated successfully!');
-        navigate(`/orders/${id}`);
+        setSuccess('Order updated successfully!');
+        setTimeout(() => navigate(`/orders/${id}`), 1500);
       } catch (err) {
         console.error('Failed to update order:', err);
         setError('Failed to update order. Please try again.');
@@ -186,127 +203,391 @@ const EditOrderPage: React.FC = () => {
     );
   };
 
+  const calculateTotal = () => {
+    const allItems = [...existingItems, ...formik.values.items];
+    return allItems.reduce((total, item) => {
+      return total + (parseFloat(item.product_price.toString()) * item.quantity);
+    }, 0);
+  };
+
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-        <CircularProgress />
+      <Box sx={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        minHeight: '60vh',
+        flexDirection: 'column',
+        gap: 2
+      }}>
+        <CircularProgress size={50} thickness={4} />
+        <Typography variant="h6" color="text.secondary">Loading order details...</Typography>
       </Box>
     );
   }
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Stack direction="row" spacing={2} alignItems="center" mb={3}>
-        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(`/orders/${id}`)}>
-          Back to Order
-        </Button>
-        <Typography variant="h4" component="h1">Edit Order #{id}</Typography>
-      </Stack>
-
-      <Paper sx={{ p: 3 }}>
-        <form onSubmit={formik.handleSubmit}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
-              <Autocomplete
-                options={customerOptions}
-                getOptionLabel={(option) => option.name || ''}
-                value={formik.values.customer}
-                onInputChange={handleCustomerSearch}
-                onChange={(_, newValue) => formik.setFieldValue('customer', newValue)}
-                isOptionEqualToValue={(option, value) => option.id === value.id}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Customer"
-                    error={formik.touched.customer && Boolean(formik.errors.customer)}
-                    helperText={formik.touched.customer && formik.errors.customer}
-                  />
-                )}
-              />
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-              <TextField
-                select
-                fullWidth
-                label="Status"
-                name="status"
-                value={formik.values.status}
-                onChange={formik.handleChange}
+    <Box sx={{ 
+      p: { xs: 2, md: 4 }, 
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+    }}>
+      {/* Header Section */}
+      <Fade in timeout={500}>
+        <Paper 
+          elevation={0} 
+          sx={{ 
+            p: 3, 
+            mb: 3, 
+            borderRadius: 3,
+            background: 'rgba(255, 255, 255, 0.9)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.2)'
+          }}
+        >
+          <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+            <Stack direction="row" spacing={2} alignItems="center">
+              <Button 
+                startIcon={<ArrowBackIcon />} 
+                onClick={() => navigate(`/orders/${id}`)}
+                variant="outlined"
+                sx={{ 
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  fontWeight: 600
+                }}
               >
-                <MenuItem value="PE">Pending</MenuItem>
-                <MenuItem value="CO">Completed</MenuItem>
-                <MenuItem value="CA">Cancelled</MenuItem>
-              </TextField>
-            </Grid>
-
-            <Grid item xs={12}><Divider>Order Items</Divider></Grid>
-
-            <Grid item xs={12}>
-              <Stack direction="row" spacing={2} alignItems="center">
-                <Autocomplete
-                  sx={{ flexGrow: 1 }}
-                  options={productOptions}
-                  getOptionLabel={(option) => `${option.name} - ₹${option.price}`}
-                  value={selectedProduct}
-                  onInputChange={handleProductSearch}
-                  onChange={(_, newValue) => setSelectedProduct(newValue)}
-                  renderInput={(params) => <TextField {...params} label="Search and Add Product" />}
-                />
-                <Button variant="outlined" onClick={handleAddItem} disabled={!selectedProduct}>
-                  Add Item
-                </Button>
-              </Stack>
-            </Grid>
-
-            <Grid item xs={12}>
-              <List>
-                {[...existingItems, ...formik.values.items].map(item => (
-                  <ListItem key={item.product} divider>
-                    <ListItemText
-                      primary={item.product_name}
-                      secondary={`Price: ₹${item.product_price}`}
-                    />
-                    <Stack direction="row" spacing={2} alignItems="center">
-                      <TextField
-                        type="number"
-                        size="small"
-                        sx={{ width: '80px' }}
-                        value={item.quantity}
-                        onChange={(e) => handleQuantityChange(item.product, parseInt(e.target.value))}
-                        inputProps={{ min: 1 }}
-                      />
-                      <IconButton
-                        edge="end"
-                        aria-label="delete"
-                        onClick={() => handleRemoveItem(item.product)}
-                      >
-                        <DeleteIcon color="error" />
-                      </IconButton>
-                    </Stack>
-                  </ListItem>
-                ))}
-              </List>
-              {formik.touched.items && typeof formik.errors.items === 'string' && (
-                <Typography color="error" variant="caption" sx={{ ml: 2 }}>
-                  {formik.errors.items}
-                </Typography>
-              )}
-            </Grid>
-
-            <Grid item xs={12}>
-              {error && (
-                <Typography color="error" sx={{ mb: 2 }}>
-                  {error}
-                </Typography>
-              )}
-              <Button type="submit" variant="contained" disabled={formik.isSubmitting}>
-                {formik.isSubmitting ? <CircularProgress size={24} /> : 'Save Changes'}
+                Back to Order
               </Button>
-            </Grid>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <Avatar sx={{ bgcolor: 'primary.main' }}>
+                  <EditIcon />
+                </Avatar>
+                <Box>
+                  <Typography variant="h4" component="h1" fontWeight="bold" color="primary">
+                    Edit Order #{id}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Modify order details and items
+                  </Typography>
+                </Box>
+              </Box>
+            </Stack>
+            {formik.values.status && (
+              <Chip 
+                label={`${statusConfig[formik.values.status as keyof typeof statusConfig]?.icon} ${statusConfig[formik.values.status as keyof typeof statusConfig]?.label}`}
+                color={statusConfig[formik.values.status as keyof typeof statusConfig]?.color}
+                variant="filled"
+                size="medium"
+                sx={{ fontWeight: 'bold' }}
+              />
+            )}
+          </Stack>
+        </Paper>
+      </Fade>
+
+      {/* Alerts */}
+      {error && (
+        <Fade in>
+          <Alert 
+            severity="error" 
+            onClose={() => setError(null)}
+            sx={{ mb: 3, borderRadius: 2 }}
+          >
+            {error}
+          </Alert>
+        </Fade>
+      )}
+      
+      {success && (
+        <Fade in>
+          <Alert 
+            severity="success" 
+            sx={{ mb: 3, borderRadius: 2 }}
+          >
+            {success}
+          </Alert>
+        </Fade>
+      )}
+
+      <form onSubmit={formik.handleSubmit}>
+        <Grid container spacing={3}>
+          {/* Customer & Status Section */}
+          <Grid item xs={12}>
+            <Zoom in timeout={600}>
+              <Card elevation={0} sx={{ borderRadius: 3, overflow: 'visible' }}>
+                <CardContent sx={{ p: 4 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
+                    <Avatar sx={{ bgcolor: 'secondary.main' }}>
+                      <PersonIcon />
+                    </Avatar>
+                    <Typography variant="h6" fontWeight="bold">
+                      Order Information
+                    </Typography>
+                  </Box>
+                  
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} md={8}>
+                      <Autocomplete
+                        options={customerOptions}
+                        getOptionLabel={(option) => option.name || ''}
+                        value={formik.values.customer}
+                        onInputChange={handleCustomerSearch}
+                        onChange={(_, newValue) => formik.setFieldValue('customer', newValue)}
+                        isOptionEqualToValue={(option, value) => option.id === value.id}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Customer"
+                            variant="outlined"
+                            fullWidth
+                            error={formik.touched.customer && Boolean(formik.errors.customer)}
+                            helperText={formik.touched.customer && formik.errors.customer}
+                            InputProps={{
+                              ...params.InputProps,
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <PersonIcon color="action" />
+                                </InputAdornment>
+                              ),
+                            }}
+                            sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
+                          />
+                        )}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} md={4}>
+                      <TextField
+                        select
+                        fullWidth
+                        label="Status"
+                        name="status"
+                        value={formik.values.status}
+                        onChange={formik.handleChange}
+                        sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
+                      >
+                        {Object.entries(statusConfig).map(([value, config]) => (
+                          <MenuItem key={value} value={value}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                              <span>{config.icon}</span>
+                              {config.label}
+                            </Box>
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Zoom>
           </Grid>
-        </form>
-      </Paper>
+
+          {/* Add Products Section */}
+          <Grid item xs={12}>
+            <Zoom in timeout={700}>
+              <Card elevation={0} sx={{ borderRadius: 3 }}>
+                <CardContent sx={{ p: 4 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
+                    <Avatar sx={{ bgcolor: 'info.main' }}>
+                      <AddIcon />
+                    </Avatar>
+                    <Typography variant="h6" fontWeight="bold">
+                      Add Products
+                    </Typography>
+                  </Box>
+                  
+                  <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems="end">
+                    <Autocomplete
+                      sx={{ flexGrow: 1 }}
+                      options={productOptions}
+                      getOptionLabel={(option) => `${option.name} - ₹${option.price}`}
+                      value={selectedProduct}
+                      onInputChange={handleProductSearch}
+                      onChange={(_, newValue) => setSelectedProduct(newValue)}
+                      renderInput={(params) => (
+                        <TextField 
+                          {...params} 
+                          label="Search and Select Product" 
+                          variant="outlined"
+                          InputProps={{
+                            ...params.InputProps,
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <SearchIcon color="action" />
+                              </InputAdornment>
+                            ),
+                          }}
+                          sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
+                        />
+                      )}
+                    />
+                    <Button 
+                      variant="contained" 
+                      onClick={handleAddItem} 
+                      disabled={!selectedProduct}
+                      startIcon={<AddIcon />}
+                      sx={{ 
+                        borderRadius: 2, 
+                        py: 1.5, 
+                        px: 3,
+                        textTransform: 'none',
+                        fontWeight: 600,
+                        minWidth: 120
+                      }}
+                    >
+                      Add Item
+                    </Button>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Zoom>
+          </Grid>
+
+          {/* Order Items Section */}
+          <Grid item xs={12}>
+            <Zoom in timeout={800}>
+              <Card elevation={0} sx={{ borderRadius: 3 }}>
+                <CardContent sx={{ p: 4 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <Avatar sx={{ bgcolor: 'success.main' }}>
+                        <ShoppingCartIcon />
+                      </Avatar>
+                      <Box>
+                        <Typography variant="h6" fontWeight="bold">
+                          Order Items
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {[...existingItems, ...formik.values.items].length} items
+                        </Typography>
+                      </Box>
+                    </Box>
+                    <Box sx={{ textAlign: 'right' }}>
+                      <Typography variant="h6" fontWeight="bold" color="primary">
+                        Total: ₹{calculateTotal().toFixed(2)}
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  {[...existingItems, ...formik.values.items].length === 0 ? (
+                    <Box sx={{ 
+                      textAlign: 'center', 
+                      py: 6,
+                      color: 'text.secondary'
+                    }}>
+                      <InventoryIcon sx={{ fontSize: 64, mb: 2, opacity: 0.3 }} />
+                      <Typography variant="h6">No items in this order</Typography>
+                      <Typography variant="body2">Add products to get started</Typography>
+                    </Box>
+                  ) : (
+                    <List disablePadding>
+                      {[...existingItems, ...formik.values.items].map((item, index) => (
+                        <Fade in key={item.product} timeout={300 + index * 100}>
+                          <ListItem 
+                            divider={index < [...existingItems, ...formik.values.items].length - 1}
+                            sx={{ 
+                              py: 2,
+                              px: 0,
+                              '&:hover': {
+                                backgroundColor: alpha('#000', 0.02),
+                                borderRadius: 2
+                              }
+                            }}
+                          >
+                            <ListItemText
+                              primary={
+                                <Typography variant="subtitle1" fontWeight="medium">
+                                  {item.product_name}
+                                </Typography>
+                              }
+                              secondary={
+                                <Typography variant="body2" color="text.secondary">
+                                  Price: ₹{item.product_price} | Subtotal: ₹{(parseFloat(item.product_price.toString()) * item.quantity).toFixed(2)}
+                                </Typography>
+                              }
+                            />
+                            <Stack direction="row" spacing={2} alignItems="center">
+                              <TextField
+                                type="number"
+                                size="small"
+                                label="Qty"
+                                sx={{ 
+                                  width: '100px',
+                                  '& .MuiOutlinedInput-root': { borderRadius: 2 }
+                                }}
+                                value={item.quantity}
+                                onChange={(e) => handleQuantityChange(item.product, parseInt(e.target.value))}
+                                inputProps={{ min: 1 }}
+                              />
+                              <Tooltip title="Remove item">
+                                <IconButton
+                                  edge="end"
+                                  aria-label="delete"
+                                  onClick={() => handleRemoveItem(item.product)}
+                                  sx={{ 
+                                    color: 'error.main',
+                                    '&:hover': { bgcolor: alpha('#f44336', 0.1) }
+                                  }}
+                                >
+                                  <DeleteIcon />
+                                </IconButton>
+                              </Tooltip>
+                            </Stack>
+                          </ListItem>
+                        </Fade>
+                      ))}
+                    </List>
+                  )}
+                  
+                  {formik.touched.items && typeof formik.errors.items === 'string' && (
+                    <Typography color="error" variant="caption" sx={{ ml: 2, mt: 1, display: 'block' }}>
+                      {formik.errors.items}
+                    </Typography>
+                  )}
+                </CardContent>
+              </Card>
+            </Zoom>
+          </Grid>
+
+          {/* Action Buttons */}
+          <Grid item xs={12}>
+            <Zoom in timeout={900}>
+              <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
+                <Button 
+                  variant="outlined" 
+                  onClick={() => navigate(`/orders/${id}`)}
+                  sx={{ 
+                    borderRadius: 2, 
+                    py: 1.5, 
+                    px: 4,
+                    textTransform: 'none',
+                    fontWeight: 600
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  type="submit" 
+                  variant="contained" 
+                  disabled={formik.isSubmitting}
+                  startIcon={formik.isSubmitting ? <CircularProgress size={20} /> : <SaveIcon />}
+                  sx={{ 
+                    borderRadius: 2, 
+                    py: 1.5, 
+                    px: 4,
+                    textTransform: 'none',
+                    fontWeight: 600,
+                    minWidth: 140
+                  }}
+                >
+                  {formik.isSubmitting ? 'Saving...' : 'Save Changes'}
+                </Button>
+              </Box>
+            </Zoom>
+          </Grid>
+        </Grid>
+      </form>
     </Box>
   );
 };
