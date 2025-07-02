@@ -61,7 +61,8 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://inventory-ogf1.vercel.app"
+   
+    "https://inventory-swart-gamma.vercel.app"
 ]
 
 
