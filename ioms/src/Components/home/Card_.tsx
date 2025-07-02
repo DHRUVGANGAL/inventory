@@ -1,4 +1,6 @@
-import React,{FC,useState,useEffect} from 'react';
+import React from 'react';
+import type {FC} from 'react';  
+import {useState,useEffect} from 'react';
 import { Order_This_Month,Revenue_This_Month,Active_Product } from '../../services/api';
 
 

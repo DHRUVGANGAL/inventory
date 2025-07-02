@@ -43,7 +43,7 @@ const MyScatterChart = () => {
                 data[value] ? data[value].label : '',
               min: -0.5,
               max: data.length - 0.5,
-              tickLabelInterval: (value, index) => index % 1 === 0,
+              tickLabelInterval: (_, index) => index % 1 === 0,
             },
           ]}
           yAxis={[{ label: 'Revenue' }]}

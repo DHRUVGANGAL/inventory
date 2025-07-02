@@ -2,8 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Box, Typography, CircularProgress, Paper, Grid, Button,
-  Stack, TextField, MenuItem, Autocomplete, IconButton, List, ListItem, ListItemText,
-  Divider, Card, CardContent, Alert, Fade, Zoom, Avatar,
+  Stack, TextField, Autocomplete, IconButton, List, ListItem, ListItemText,
+  Divider, Alert, Fade,  Avatar,
   Tooltip, InputAdornment, alpha, AppBar, Toolbar, Container
 } from '@mui/material';
 import { createOrder, fetchCustomer, fetchProducts, fetchCustomerDetails } from '../services/api';
@@ -246,7 +246,7 @@ const CreateOrderPage: React.FC = () => {
                 </Stack>
               </Grid>
 
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={4} >
                 <Stack spacing={3}>
                   <Paper elevation={2} sx={{ p: 3, borderRadius: 3 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>

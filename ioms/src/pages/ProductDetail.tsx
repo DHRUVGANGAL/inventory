@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
-  Box, Typography, CircularProgress, Paper, Grid,
+  Box, Typography, CircularProgress, Grid,
   Button, Stack, Chip, Divider, Card, CardContent, Avatar,
-  Alert, Fade, Container, IconButton, Tooltip
+  Alert, Fade, Container,
 } from '@mui/material';
 import { fetchProductDetails } from '../services/api';
 import type { ProductInfo } from '../services/api';

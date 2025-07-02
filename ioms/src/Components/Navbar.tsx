@@ -1,4 +1,6 @@
-import React, { useContext, FC } from 'react';
+import React from 'react';
+import { useContext} from 'react';
+import type{ FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { Button } from '@mui/material';
