@@ -1,4 +1,5 @@
-import React, { createContext, useState, useEffect, FC, ReactNode } from 'react';
+import  { createContext, useState, useEffect} from 'react';
+import type { FC, ReactNode } from 'react';
 
 interface User {
   email: string;

@@ -1,4 +1,3 @@
-import React from 'react';
 import type { FC, ChangeEvent, FormEvent } from 'react';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';

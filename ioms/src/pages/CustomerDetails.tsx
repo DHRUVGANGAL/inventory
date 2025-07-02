@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams,  useNavigate } from 'react-router-dom';
 import {
-  Box, Typography, CircularProgress, Paper, Grid, Divider,
+  Box, Typography, CircularProgress, Grid, 
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, 
   Button, Stack, Card, CardContent, Chip, Avatar, IconButton,
   Tooltip, Alert, Fade, Container
 } from '@mui/material';
 import { fetchCustomerDetails } from '../services/api';
-import type { Customer, OrderDetail } from '../services/api';
+import type { Customer } from '../services/api';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add';
 import PersonIcon from '@mui/icons-material/Person';

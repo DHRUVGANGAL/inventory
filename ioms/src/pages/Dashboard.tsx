@@ -1,8 +1,7 @@
-import React from 'react';
 import type{ FC } from 'react';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import Card_ from '../Components/home/Card_';
 import MyScatterChart from '../Components/home/Graph';
 import TopSellingTable from '../Components/home/Top_Products';

@@ -1,4 +1,3 @@
-import React from 'react';
 import type {FC} from 'react';  
 import {useState,useEffect} from 'react';
 import { Order_This_Month,Revenue_This_Month,Active_Product } from '../../services/api';
@@ -13,7 +12,7 @@ const Card_: FC = () => {
     const [orderCount, setOrderCount] = useState<number>(0);
     const [revenueThisMonth, setRevenueThisMonth] = useState<number>(0);
     const [activeProducts, setActiveProducts] = useState<number>(0);
-    const [totalCustomers, setTotalCustomers] = useState<number>(0);
+    const [totalCustomers, _] = useState<number>(0);
 
     useEffect(() => {
       const fetchOrder = async () => {

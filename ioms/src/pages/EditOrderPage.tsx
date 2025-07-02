@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box, Typography, CircularProgress, Paper, Grid, Button,
   Stack, TextField, MenuItem, Autocomplete, IconButton, List, ListItem, ListItemText, 
-  Divider, Card, CardContent, Chip, Alert, Fade, Zoom, Avatar, 
+   Card, CardContent, Chip, Alert, Fade, Zoom, Avatar, 
   Tooltip, InputAdornment, alpha
 } from '@mui/material';
 import { fetchOrderDeatil, updateOrder, fetchCustomer, fetchProducts } from '../services/api';
