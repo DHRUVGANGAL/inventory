@@ -117,7 +117,7 @@ const EditOrderPage: React.FC = () => {
         }
         const existing = orderData.item.map((item: any) => ({
           order_item_id: item.id,
-          product: item.product_id,
+          product: item.product,
           product_name: item.product_name,
           product_price: item.product_price,
           quantity: item.quantity,
