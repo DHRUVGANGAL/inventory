@@ -131,7 +131,7 @@ export interface Customer {
   phone_number: string;
   created_by: number;
   OrderCount: number;
-  OrderDetail: any[];
+  OrderDetail: OrderDetail[];
 }
 
 export type CreateCustomerData = Omit<Customer, 'id' | 'orderCount' | 'created_by'>;

@@ -47,7 +47,7 @@ const SigninPage: FC = () => {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
  
-  const [successMessage, setSuccessMessage] = useState<string>(locationState?.message || '');
+  const [successMessage, _] = useState<string>(locationState?.message || '');
 
   
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -1,4 +1,4 @@
-
+import { useEffect, useState } from 'react';
 import { ScatterChart } from '@mui/x-charts/ScatterChart';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { fetchMonthlyRevenue } from '../../services/api'; 

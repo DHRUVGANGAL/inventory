@@ -183,7 +183,8 @@ const CreateOrderPage: React.FC = () => {
        
           <Paper elevation={0} sx={{ p: 3, borderRadius: 3, backgroundColor: 'transparent' }}>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={8}>
+              <Grid >
+              
                 <Stack spacing={3}>
                   <Paper elevation={2} sx={{ p: 3, borderRadius: 3 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
@@ -246,7 +247,7 @@ const CreateOrderPage: React.FC = () => {
                 </Stack>
               </Grid>
 
-              <Grid item xs={12} md={4} >
+              <Grid >
                 <Stack spacing={3}>
                   <Paper elevation={2} sx={{ p: 3, borderRadius: 3 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
@@ -286,3 +287,5 @@ const CreateOrderPage: React.FC = () => {
 };
 
 export default CreateOrderPage;
+
+

@@ -171,7 +171,7 @@ class OrderItemCreateSerializer(serializers.ModelSerializer):
         model = OrderItem
        
         fields = ('id', 'product', 'quantity') 
-        read_only_fields = ('id',) 
+        
         
 class OrderCreateSerializer(WritableNestedModelSerializer):
    

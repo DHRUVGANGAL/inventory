@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams,  useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
-  Box, Typography, CircularProgress, Grid, 
+  Box, Typography, CircularProgress,Grid, 
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, 
   Button, Stack, Card, CardContent, Chip, Avatar, IconButton,
   Tooltip, Alert, Fade, Container
 } from '@mui/material';
 import { fetchCustomerDetails } from '../services/api';
-import type { Customer } from '../services/api';
+import type { Customer, OrderDetail } from '../services/api';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add';
 import PersonIcon from '@mui/icons-material/Person';
@@ -208,7 +208,7 @@ const CustomerDetailPage: React.FC = () => {
 
 
           <Grid container spacing={3} mb={4}>
-            <Grid item xs={12} md={4}>
+            <Grid >
               <Card sx={{ height: '100%', transition: 'transform 0.2s', '&:hover': { transform: 'translateY(-2px)' } }}>
                 <CardContent sx={{ textAlign: 'center', p: 3 }}>
                   <Avatar sx={{ 
@@ -231,7 +231,7 @@ const CustomerDetailPage: React.FC = () => {
               </Card>
             </Grid>
             
-            <Grid item xs={12} md={4}>
+            <Grid >
               <Card sx={{ height: '100%', transition: 'transform 0.2s', '&:hover': { transform: 'translateY(-2px)' } }}>
                 <CardContent sx={{ textAlign: 'center', p: 3 }}>
                   <Avatar sx={{ 
@@ -254,7 +254,7 @@ const CustomerDetailPage: React.FC = () => {
               </Card>
             </Grid>
             
-            <Grid item xs={12} md={4}>
+            <Grid >
               <Card sx={{ height: '100%', transition: 'transform 0.2s', '&:hover': { transform: 'translateY(-2px)' } }}>
                 <CardContent sx={{ textAlign: 'center', p: 3 }}>
                   <Avatar sx={{ 
@@ -314,7 +314,7 @@ const CustomerDetailPage: React.FC = () => {
                   </TableHead>
                   <TableBody>
                     {customer.OrderDetail && customer.OrderDetail.length > 0 ? (
-                      customer.OrderDetail.map((order: OrderDetails, index: number) => (
+                      customer.OrderDetail.map((order: OrderDetail, _: number) => (
                         <TableRow 
                           key={order.order_id} 
                           hover
