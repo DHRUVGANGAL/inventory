@@ -1,9 +1,10 @@
-import React, { useState, FC, ChangeEvent, FormEvent } from 'react';
+import React from 'react';
+import type { FC, ChangeEvent, FormEvent } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { signUp } from '../services/api'; // Assuming this API function is correctly typed
+import { signUp } from '../services/api'; 
 import { Button, CircularProgress, TextField } from '@mui/material';
 
-// The data structure for the form state
 interface SignupFormData {
   first_name: string;
   last_name: string;

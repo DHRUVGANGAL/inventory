@@ -17,7 +17,8 @@ const CreateCustomerPage: React.FC = () => {
     name: '',
     email: '',
     phone_number: '',
-    OrderDetails: [], 
+    OrderCount: 0, 
+    OrderDetail: [ ], 
   });
   useEffect(() => {
     if (!isAuthenticated) {

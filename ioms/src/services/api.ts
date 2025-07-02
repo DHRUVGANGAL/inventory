@@ -12,18 +12,18 @@ interface User {
   name?: string;
 }
 
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  description?: string;
-}
+// interface Product {
+//   id: string;
+//   name: string;
+//   price: number;
+//   description?: string;
+// }
 
 
 export interface SignUpData {
   email: string;
   password: string;
-  fast_name: string;
+  first_name: string;
   last_name: string;
   phone_number: string;
 }
@@ -131,7 +131,7 @@ export interface Customer {
   phone_number: string;
   created_by: number;
   OrderCount: number;
-  OrderDetail: OrderDetail[];
+  OrderDetail: any[];
 }
 
 export type CreateCustomerData = Omit<Customer, 'id' | 'orderCount' | 'created_by'>;
