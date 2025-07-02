@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
-  Box, Typography, CircularProgress, Grid,
+  Box, Typography, CircularProgress ,Grid,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button,
-  Stack, Chip, Link as Card, CardContent, Avatar, Alert,
+  Stack, Chip, Link as  Card, CardContent, Avatar, Alert,
   Fade, Container
 } from '@mui/material';
 import { fetchOrderDeatil } from '../services/api';
@@ -263,7 +263,7 @@ const OrderDetailPage: React.FC = () => {
             </Grid>
             
       
-            <Grid >
+            <Grid>
               <Card sx={{ 
                 height: '100%', 
                 transition: 'transform 0.2s, box-shadow 0.2s', 
@@ -306,7 +306,7 @@ const OrderDetailPage: React.FC = () => {
                           </Typography>
                         </Box>
                       </Grid>
-                      <Grid>
+                      <Grid >
                         <Box>
                           <Typography variant="subtitle2" color="text.secondary" gutterBottom>
                             Email Address
