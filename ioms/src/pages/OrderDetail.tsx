@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
-  Box, Typography, CircularProgress ,Grid,
+  Box, Typography, CircularProgress, Grid,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button,
-  Stack, Chip, Link as  Card, CardContent, Avatar, Alert,
+  Stack, Chip, Card, CardContent, Avatar, Alert,
   Fade, Container
 } from '@mui/material';
 import { fetchOrderDeatil } from '../services/api';
@@ -142,7 +142,7 @@ const OrderDetailPage: React.FC = () => {
     <Container maxWidth="lg">
       <Fade in={true} timeout={500}>
         <Box sx={{ py: 3 }}>
-      
+
           <Card sx={{ 
             mb: 4, 
             background: 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%)',
@@ -212,9 +212,9 @@ const OrderDetailPage: React.FC = () => {
             </CardContent>
           </Card>
 
-          
+
           <Grid container spacing={3} sx={{ mb: 4 }}>
-        
+          
             <Grid >
               <Card sx={{ 
                 height: '100%', 
@@ -262,8 +262,8 @@ const OrderDetailPage: React.FC = () => {
               </Card>
             </Grid>
             
-      
-            <Grid>
+
+            <Grid >
               <Card sx={{ 
                 height: '100%', 
                 transition: 'transform 0.2s, box-shadow 0.2s', 
@@ -341,7 +341,7 @@ const OrderDetailPage: React.FC = () => {
             </Grid>
           </Grid>
 
-     
+
           <Card>
             <CardContent sx={{ p: 0 }}>
               <Box sx={{ p: 3, pb: 0 }}>
@@ -440,7 +440,7 @@ const OrderDetailPage: React.FC = () => {
                 </Table>
               </TableContainer>
 
-
+       
               {order.item && order.item.length > 0 && (
                 <Box sx={{ 
                   p: 3, 
