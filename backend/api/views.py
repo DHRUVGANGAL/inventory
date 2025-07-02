@@ -124,7 +124,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(created_by=self.request.user)
     # def update(self, request, *args, **kwargs):
     #     partial = kwargs.pop('partial', False)
     #     instance = self.get_object()
