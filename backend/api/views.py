@@ -1,6 +1,6 @@
 from django.db.models import Max
 from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
+# from django.views.decorators.cache import cache_page
 from api.serializers import ProductSerializer, OrderSerializer, ProductInfoSerializer, OrderCreateSerializer,ProductSalesSerializer,CustomerSerializer
 from api.models import Product, Order, OrderItem,Customer
 from rest_framework.response import Response
