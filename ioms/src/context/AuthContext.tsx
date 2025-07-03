@@ -21,6 +21,7 @@ interface AuthProviderProps {
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);

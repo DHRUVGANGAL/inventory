@@ -1,10 +1,10 @@
 import type { FC, ChangeEvent, FormEvent } from 'react';
 import { useState } from 'react';
-import { useContext } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { signIn } from '../services/api';
-import { AuthContext } from "../context/AuthContext";
 import { Button, CircularProgress, TextField } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import {login} from '../features/auth/authSlice';
 
 
 interface SigninFormData {
@@ -13,9 +13,6 @@ interface SigninFormData {
 }
 
 
-interface AuthContextType {
-  login: (user: { email: string }, token: string) => void;
-}
 
 
 interface LocationState {
@@ -37,8 +34,9 @@ const Signin: FC = () => {
   const location = useLocation();
   const locationState = location.state as LocationState | null;
 
+  const dispatch = useDispatch();
 
-  const { login } = useContext(AuthContext) as AuthContextType;
+
   
   const [formData, setFormData] = useState<SigninFormData>({
     email: '',
@@ -63,7 +61,7 @@ const Signin: FC = () => {
     try {
      
       const response = await signIn(formData);
-      login({ email: formData.email }, response.access);
+      dispatch(login({user:{ email: formData.email}, token: response.access }));
       console.log('Login successful:', response.access);
       navigate('/');
     } catch (err) {

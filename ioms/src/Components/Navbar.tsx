@@ -1,20 +1,19 @@
-import { useContext} from 'react';
 import type{ FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
 import { Button } from '@mui/material';
+import {logout} from '../features/auth/authSlice';
+import { useDispatch,useSelector } from 'react-redux';
 
-interface AuthContextType {
-  isAuthenticated: boolean;
-  logout: () => void;
-}
+
+
 
 const Navbar: FC = () => {
-  const { isAuthenticated, logout } = useContext(AuthContext) as AuthContextType;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state: any) => state.auth);
 
   const handleLogout = () => {
-    logout();
+    dispatch(logout());
     navigate('/signin');
   };
 
