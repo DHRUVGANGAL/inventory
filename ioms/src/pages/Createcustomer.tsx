@@ -1,18 +1,16 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState} from 'react';
 import { Box, Button, TextField, Typography, Paper, Container, CircularProgress, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { createCustomer} from '../services/api';
-import type { CreateCustomerData } from '../services/api'; 
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-interface AuthContextType {
-  isAuthenticated: boolean;
-}
+import type { CreateCustomerData } from '../interface/interface'; 
 
 
-const CreateCustomerPage: React.FC = () => {
+
+
+
+const CreateCustomer: React.FC = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useContext(AuthContext) as AuthContextType;
+
   const [formData, setFormData] = useState<CreateCustomerData>({
     name: '',
     email: '',
@@ -20,11 +18,7 @@ const CreateCustomerPage: React.FC = () => {
     OrderCount: 0, 
     OrderDetail: [ ], 
   });
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/signin');
-    }
-  }, [isAuthenticated, navigate]);
+
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -121,4 +115,4 @@ const CreateCustomerPage: React.FC = () => {
   );
 };
 
-export default CreateCustomerPage;
+export default CreateCustomer;

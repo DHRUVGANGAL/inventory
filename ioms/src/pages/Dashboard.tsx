@@ -1,32 +1,19 @@
 import type{ FC } from 'react';
-import { useContext, useEffect } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import {  useNavigate } from 'react-router-dom';
-import Card_ from '../Components/home/Card_';
-import MyScatterChart from '../Components/home/Graph';
-import TopSellingTable from '../Components/home/Top_Products';
-import LowStockTable from '../Components/home/Low_stock';
-import RecentOrdersTable from '../Components/home/Recent_Order';
+import DashBoardCard from '../Components/home/DashBoardCard';
+import Graph from '../Components/home/Graph';
+import TopSelling from '../Components/home/TopProducts';
+import LowStock from '../Components/home/LowStock';
+import RecentOrders from '../Components/home/RecentOrder';
 
 
 
-interface AuthContextType {
-    isAuthenticated: boolean;
-    logout: () => void;
-  }
-  
+
 
 const Dashboard: FC = () => {
 
 
 
-const {isAuthenticated} = useContext(AuthContext) as AuthContextType;
-const navigate = useNavigate();
-useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/signin');
-    }
-  }, [isAuthenticated, navigate]);
+
 
   
 
@@ -37,7 +24,7 @@ useEffect(() => {
       <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 items-stretch">
 
   <div className="h-full">
-    <Card_ />
+    <DashBoardCard />
   </div>
 
 
@@ -45,17 +32,17 @@ useEffect(() => {
     <div className="shadow p-4 bg-white rounded h-full flex flex-col">
       <h2 className="text-xl font-semibold mb-2">Monthly Revenue</h2>
       <div className="flex-1">
-        <MyScatterChart />
+        <Graph/>
       </div>
     </div>
   </div>
 </div>
 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-11">
-<TopSellingTable />
-<LowStockTable />
+<TopSelling />
+<LowStock />
   </div>
   <div className='mt-6 w-[100%]'>
-  <RecentOrdersTable/>
+  <RecentOrders/>
   </div>
 </div>
     

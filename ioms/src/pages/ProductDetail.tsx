@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box, Typography, CircularProgress, Button, Stack, Chip,
   Divider, Card, CardContent, Avatar, Alert, Fade, Container,
 } from '@mui/material';
 import { fetchProductDetails } from '../services/api';
-import type { ProductInfo } from '../services/api';
+import type { ProductInfo} from '../interface/interface';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
 import InventoryIcon from '@mui/icons-material/Inventory';
@@ -16,11 +16,9 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import { AuthContext } from '../context/AuthContext';
 
-interface AuthContextType {
-    isAuthenticated: boolean;
-}
+
+
 
 const getStockStatus = (stock: number) => {
   if (stock === 0) return { label: 'Out of Stock', color: 'error', icon: <CancelIcon /> };
@@ -28,19 +26,15 @@ const getStockStatus = (stock: number) => {
   return { label: 'In Stock', color: 'success', icon: <CheckCircleIcon /> };
 };
 
-const ProductDetailPage: React.FC = () => {
+const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { isAuthenticated } = useContext(AuthContext) as AuthContextType;
+  
   const [product, setProduct] = useState<ProductInfo | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/signin');
-    }
-  }, [isAuthenticated, navigate]);
+ 
 
   useEffect(() => {
     if (!id) {
@@ -240,4 +234,4 @@ const ProductDetailPage: React.FC = () => {
   );
 };
 
-export default ProductDetailPage;
+export default ProductDetail;

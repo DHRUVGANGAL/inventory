@@ -12,7 +12,7 @@ interface TopProduct {
   price: number;
   total_sold: number;
   }
-const TopSellingTable: React.FC = () => {
+const TopSelling: React.FC = () => {
   const [products, setProducts] = useState<TopProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -64,4 +64,4 @@ const TopSellingTable: React.FC = () => {
   );
 };
 
-export default TopSellingTable;
+export default TopSelling;

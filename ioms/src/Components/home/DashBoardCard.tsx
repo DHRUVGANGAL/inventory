@@ -1,14 +1,12 @@
 import type {FC} from 'react';  
 import {useState,useEffect} from 'react';
 import { Order_This_Month,Revenue_This_Month,Active_Product } from '../../services/api';
-
-
 import Card from '@mui/material/Card';
 
 
 
   
-const Card_: FC = () => {
+const DashBoardCard: FC = () => {
     const [orderCount, setOrderCount] = useState<number>(0);
     const [revenueThisMonth, setRevenueThisMonth] = useState<number>(0);
     const [activeProducts, setActiveProducts] = useState<number>(0);
@@ -71,4 +69,4 @@ const Card_: FC = () => {
 }
 
   
-export default Card_
+export default DashBoardCard;

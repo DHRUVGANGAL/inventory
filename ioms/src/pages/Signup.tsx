@@ -3,26 +3,13 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { signUp } from '../services/api'; 
 import { Button, CircularProgress, TextField } from '@mui/material';
-
-interface SignupFormData {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone_number: string; 
-  password: string;
-  confirmPassword: string;
-}
+import type { ApiError,SignupFormData } from '../interface/interface';
 
 
-interface ApiError {
-  response?: {
-    data?: {
-      message?: string;
-    };
-  };
-}
 
-const SignupPage: FC = () => {
+
+
+const Signup: FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<SignupFormData>({
     first_name: '',
@@ -202,4 +189,4 @@ const SignupPage: FC = () => {
   );
 };
 
-export default SignupPage;
+export default Signup;

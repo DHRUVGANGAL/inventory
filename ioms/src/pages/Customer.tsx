@@ -5,18 +5,15 @@ import {
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchCustomers } from '../services/api';
-import type { Customer } from '../services/api';
+import type { Customer} from '../interface/interface';
 import AddIcon from '@mui/icons-material/Add';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+
 import {deleteCustomer} from '../services/api';
 
-interface AuthContextType {
-    isAuthenticated: boolean;
-}
 
-const CustomersPage: React.FC = () => {
-  const { isAuthenticated } = useContext(AuthContext) as AuthContextType;
+
+const Customers: React.FC = () => {
+
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -35,11 +32,7 @@ const CustomersPage: React.FC = () => {
     }
   };
   
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/signin');
-    }
-  }, [isAuthenticated, navigate]);
+
 
   useEffect(() => {
     const loadCustomers = async () => {
@@ -141,4 +134,4 @@ const CustomersPage: React.FC = () => {
   );
 };
 
-export default CustomersPage;
+export default Customers;

@@ -1,21 +1,22 @@
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import SignupPage from './pages/Signup';
-import SigninPage from './pages/Signin';
+import Signup from './pages/Signup';
+import Signin from './pages/Signin';
 import Navbar from './Components/Navbar'
 import Dashboard from './pages/Dashboard';
-import CustomersPage from './pages/Customer';
-import CreateCustomerPage from './pages/Createcustomer';
-import EditCustomerPage from './pages/EditCustomerPage';
-import CustomerDetailPage from './pages/CustomerDetails';
-import OrdersPage from './pages/OrdersPage';
-import OrderDetailPage from './pages/OrderDetail';
-import EditOrderPage from './pages/EditOrderPage';
-import ProductsPage from './pages/ProductsPage';
+import Customers from './pages/Customer';
+import CreateCustomer from './pages/Createcustomer';
+import EditCustomer from './pages/EditCustomer';
+import CustomerDetail from './pages/CustomerDetails';
+import Orders from './pages/Orders';
+import OrderDetail from './pages/OrderDetail';
+import EditOrder from './pages/EditOrder';
+import Products from './pages/Products';
 import CreateProduct from './pages/CreateProduct';
-import EditProductPage from './pages/EditProductPage';
-import ProductDetailPage from './pages/ProductDetail';
-import CreateOrderPage from './pages/CreateOrderPage';
+import EditProduct from './pages/EditProduct';
+import ProductDetail from './pages/ProductDetail';
+import CreateOrder from './pages/CreateOrder';
+import PrivateRoute from './PrivateRoute/PrivateRote';
 
 
 
@@ -29,21 +30,21 @@ const App = () => {
         <Navbar/>
           <Routes>
             
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/signin" element={<SigninPage />} />
-            <Route path="/" element={<Dashboard/>} />
-            <Route path="/customers" element={<CustomersPage />} />
-            <Route path="/customers/create" element={<CreateCustomerPage />} />
-            <Route path="/customers/edit/:id" element={<EditCustomerPage />} />
-            <Route path="/customers/:id" element={<CustomerDetailPage />} />
-            <Route path="/orders" element={<OrdersPage />} />
-            <Route path="/orders/:id" element={<OrderDetailPage />} /> 
-            <Route path="/orders/edit/:id" element={<EditOrderPage />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/products/create" element={<CreateProduct />} /> 
-            <Route path="/products/edit/:id" element={<EditProductPage />} />
-            <Route path="/products/:id" element={<ProductDetailPage/>} /> 
-            <Route path="/orders/new" element={<CreateOrderPage />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/" element={<PrivateRoute><Dashboard/></PrivateRoute>} />
+            <Route path="/customers" element={<PrivateRoute><Customers /></PrivateRoute>} />
+            <Route path="/customers/create" element={<PrivateRoute><CreateCustomer /></PrivateRoute>} />
+            <Route path="/customers/edit/:id" element={<PrivateRoute><EditCustomer /></PrivateRoute>} />
+            <Route path="/customers/:id" element={<PrivateRoute><CustomerDetail /></PrivateRoute>} />
+            <Route path="/orders" element={<PrivateRoute><Orders /></PrivateRoute>} />
+            <Route path="/orders/:id" element={<PrivateRoute><OrderDetail /></PrivateRoute>} /> 
+            <Route path="/orders/edit/:id" element={<PrivateRoute><EditOrder /></PrivateRoute>} />
+            <Route path="/products" element={<PrivateRoute><Products /></PrivateRoute>} />
+            <Route path="/products/create" element={<PrivateRoute><CreateProduct /></PrivateRoute> }/> 
+            <Route path="/products/edit/:id" element={<PrivateRoute><EditProduct /></PrivateRoute>} />
+            <Route path="/products/:id" element={<PrivateRoute><ProductDetail/></PrivateRoute>} /> 
+            <Route path="/orders/new" element={<PrivateRoute><CreateOrder /></PrivateRoute>} />
           </Routes>
         </div>
       </Router>

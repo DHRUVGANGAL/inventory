@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { ScatterChart } from '@mui/x-charts/ScatterChart';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { fetchMonthlyRevenue } from '../../services/api'; 
-import type { MonthlyRevenue } from '../../services/api'; 
+import type { MonthlyRevenue } from '../../interface/interface'; 
 
-const MyScatterChart = () => {
+const Graph = () => {
   const [data, setData] = useState<MonthlyRevenue[]>([]);
 
   useEffect(() => {
@@ -70,4 +70,4 @@ const MyScatterChart = () => {
   );
 };
 
-export default MyScatterChart;
+export default Graph;

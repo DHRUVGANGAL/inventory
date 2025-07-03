@@ -7,7 +7,7 @@ import {
   Tooltip, InputAdornment, alpha
 } from '@mui/material';
 import { fetchOrderDeatil, updateOrder, fetchCustomer, fetchProducts } from '../services/api';
-import type { Customer } from '../services/api';
+import type { Customer,ProductInfo } from '../interface/interface';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonIcon from '@mui/icons-material/Person';
@@ -19,15 +19,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
-export interface ProductInfo {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
-  stock: number;
-  active: boolean;
-}
 
 interface OrderItem {
   order_item_id?: number;
@@ -49,7 +40,7 @@ const statusConfig = {
   'CA': { label: 'Cancelled', color: 'error' as const, icon: '❌' },
 };
 
-const EditOrderPage: React.FC = () => {
+const EditOrder: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
@@ -595,4 +586,4 @@ const EditOrderPage: React.FC = () => {
   );
 };
 
-export default EditOrderPage;
+export default EditOrder;

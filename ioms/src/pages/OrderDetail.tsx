@@ -7,7 +7,7 @@ import {
   Fade, Container
 } from '@mui/material';
 import { fetchOrderDeatil } from '../services/api';
-import type { Order, OrderItem } from '../services/api';
+import type { Order, OrderItem } from '../interface/interface';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PersonIcon from '@mui/icons-material/Person';
 import ReceiptIcon from '@mui/icons-material/Receipt';
@@ -17,12 +17,8 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import EmailIcon from '@mui/icons-material/Email';
 import LaunchIcon from '@mui/icons-material/Launch';
 import InventoryIcon from '@mui/icons-material/Inventory';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
 
-interface AuthContextType {
-    isAuthenticated: boolean;
-}
+
 
 const getStatusChipColor = (status: string) => {
   switch (status.toLowerCase()) {
@@ -42,19 +38,14 @@ const getStatusChipColor = (status: string) => {
   }
 };
 
-const OrderDetailPage: React.FC = () => {
+const OrderDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { isAuthenticated } = useContext(AuthContext) as AuthContextType;
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/signin');
-    }
-  }, [isAuthenticated, navigate]);
+ 
 
   useEffect(() => {
     if (!id) {
@@ -465,4 +456,4 @@ const OrderDetailPage: React.FC = () => {
   );
 };
 
-export default OrderDetailPage;
+export default OrderDetail;

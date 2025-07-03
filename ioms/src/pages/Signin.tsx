@@ -31,7 +31,7 @@ interface ApiError {
   };
 }
 
-const SigninPage: FC = () => {
+const Signin: FC = () => {
   const navigate = useNavigate();
  
   const location = useLocation();
@@ -166,4 +166,4 @@ const SigninPage: FC = () => {
   );
 };
 
-export default SigninPage;
+export default Signin;

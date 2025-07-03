@@ -15,7 +15,7 @@ export interface Low_Stock {
     active: boolean;
   }
 
-const LowStockTable: React.FC = () => {
+const LowStock: React.FC = () => {
   const [data, setData] = useState<Low_Stock[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -67,4 +67,4 @@ const LowStockTable: React.FC = () => {
   );
 };
 
-export default LowStockTable;
+export default LowStock;

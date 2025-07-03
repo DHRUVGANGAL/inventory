@@ -3,171 +3,172 @@ import axios from 'axios';
 import type{ AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 import { API_URL } from '../config';
+import type{SignUpData,SignInCredentials,AuthResponse,Order_count,Order_Revenue,ActiveProduct,top_products,Low_Stock,PaginatedLowStockResponse,Order,OrderListResponse,MonthlyRevenue,Customer,CreateCustomerData,CustomerFormData,PaginatedCustomerResponse,PaginatedOrderResponse,ProductInfo,PaginatedProductResponse} from '../interface/interface';
 
 
 
-interface User {
-  id: string;
-  email: string;
-  name?: string;
-}
-
-// interface Product {
+// interface User {
 //   id: string;
-//   name: string;
-//   price: number;
-//   description?: string;
+//   email: string;
+//   name?: string;
+// }
+
+// // interface Product {
+// //   id: string;
+// //   name: string;
+// //   price: number;
+// //   description?: string;
+// // }
+
+
+// export interface SignUpData {
+//   email: string;
+//   password: string;
+//   first_name: string;
+//   last_name: string;
+//   phone_number: string;
 // }
 
 
-export interface SignUpData {
-  email: string;
-  password: string;
-  first_name: string;
-  last_name: string;
-  phone_number: string;
-}
+// export interface SignInCredentials {
+//   email: string;
+//   password: string;
+// }
 
 
-export interface SignInCredentials {
-  email: string;
-  password: string;
-}
-
-
-export interface AuthResponse {
-  access: string;
-  user: User;
-}
-export interface Order_count{
-  count: number;
+// export interface AuthResponse {
+//   access: string;
+//   user: User;
+// }
+// export interface Order_count{
+//   count: number;
   
-}
-export interface Order_Revenue{
-  total_revenue: number;
-}
+// }
+// export interface Order_Revenue{
+//   total_revenue: number;
+// }
 
-export interface Active_Product{
-  count: number;
-}
-
-
-export interface top_products{
-  id: number;
-  name: string;
-  price: number;
-  total_sold: number;
-}
+// export interface Active_Product{
+//   count: number;
+// }
 
 
-export interface Low_Stock {
-  id: number;
-  name: string;
-  description: string; 
-  price: string;        
-  stock: number;
-  active: boolean;
-}
+// export interface top_products{
+//   id: number;
+//   name: string;
+//   price: number;
+//   total_sold: number;
+// }
 
 
-interface PaginatedLowStockResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: Low_Stock[];
-}
-export interface OrderItem {
-  product_name: string;
-  product_price: string; 
-  quantity: number;
-  Item_SubTotal: number; 
-}
-
-export interface OrderItemPayload{
-  product: string;
-  quantity: number;
-
-}
-
-export interface Order {
-  order_id: string;
-  item: OrderItem[];
-  total_price: string; 
-  status: string; 
-  created_at: string;
-  customer: Customer | null;
-  created_by: number;
-  product: number[]; 
-  total_quantity: number;
-}
+// export interface Low_Stock {
+//   id: number;
+//   name: string;
+//   description: string; 
+//   price: string;        
+//   stock: number;
+//   active: boolean;
+// }
 
 
-export interface OrderListResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: Order[];
-}
+// interface PaginatedLowStockResponse {
+//   count: number;
+//   next: string | null;
+//   previous: string | null;
+//   results: Low_Stock[];
+// }
+// export interface OrderItem {
+//   product_name: string;
+//   product_price: string; 
+//   quantity: number;
+//   Item_SubTotal: number; 
+// }
+
+// export interface OrderItemPayload{
+//   product: string;
+//   quantity: number;
+
+// }
+
+// export interface Order {
+//   order_id: string;
+//   item: OrderItem[];
+//   total_price: string; 
+//   status: string; 
+//   created_at: string;
+//   customer: Customer | null;
+//   created_by: number;
+//   product: number[]; 
+//   total_quantity: number;
+// }
 
 
-export interface MonthlyRevenue {
-  label: string;
-  value: number;
-}
+// export interface OrderListResponse {
+//   count: number;
+//   next: string | null;
+//   previous: string | null;
+//   results: Order[];
+// }
 
 
-
-
-export interface OrderDetail {
-  order_id: string;
-  created_at: string;
-  status: string;
-}
-
-export interface Customer {
-  id: number;
-  name: string;
-  email: string;
-  phone_number: string;
-  created_by: number;
-  OrderCount: number;
-  OrderDetail: OrderDetail[];
-}
-
-export type CreateCustomerData = Omit<Customer, 'id' | 'orderCount' | 'created_by'>;
-export type CustomerFormData = Omit<Customer, 'id' | 'orderCount' | 'created_by'>;
-
-export interface PaginatedCustomerResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: Customer[];
-}
+// export interface MonthlyRevenue {
+//   label: string;
+//   value: number;
+// }
 
 
 
-export interface PaginatedOrderResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: Order[];
-}
 
-export interface ProductInfo {
-  id: number; 
-  name: string;
-  description: string;
-  price: string; 
-  stock: number;
-  active: boolean;
-}
+// export interface OrderDetail {
+//   order_id: string;
+//   created_at: string;
+//   status: string;
+// }
 
-export interface PaginatedProductResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: ProductInfo[];
-}
+// export interface Customer {
+//   id: number;
+//   name: string;
+//   email: string;
+//   phone_number: string;
+//   created_by: number;
+//   OrderCount: number;
+//   OrderDetail: OrderDetail[];
+// }
+
+// export type CreateCustomerData = Omit<Customer, 'id' | 'orderCount' | 'created_by'>;
+// export type CustomerFormData = Omit<Customer, 'id' | 'orderCount' | 'created_by'>;
+
+// export interface PaginatedCustomerResponse {
+//   count: number;
+//   next: string | null;
+//   previous: string | null;
+//   results: Customer[];
+// }
+
+
+
+// export interface PaginatedOrderResponse {
+//   count: number;
+//   next: string | null;
+//   previous: string | null;
+//   results: Order[];
+// }
+
+// export interface ProductInfo {
+//   id: number; 
+//   name: string;
+//   description: string;
+//   price: string; 
+//   stock: number;
+//   active: boolean;
+// }
+
+// export interface PaginatedProductResponse {
+//   count: number;
+//   next: string | null;
+//   previous: string | null;
+//   results: ProductInfo[];
+// }
 
 
 const api = axios.create({
@@ -221,8 +222,8 @@ export const Revenue_This_Month = async (): Promise<Order_Revenue> => {
   const response = await api.get<Order_Revenue>(`/orders/month-revenue/?month=${currentMonth}`);
   return response.data;
 };
-export const Active_Product = async (): Promise<Active_Product> => {
-  const response = await api.get<Active_Product>('/products/?active=true');
+export const Active_Product = async (): Promise<ActiveProduct> => {
+  const response = await api.get<ActiveProduct>('/products/?active=true');
   return response.data;
 };
 

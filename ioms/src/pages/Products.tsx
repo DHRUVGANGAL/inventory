@@ -6,17 +6,14 @@ import {
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { deleteProduct, fetchProduct } from '../services/api';
-import type { ProductInfo } from '../services/api';
+import type { ProductInfo,AuthContextType } from '../interface/interface';
 import AddIcon from '@mui/icons-material/Add';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
 
-interface AuthContextType {
-    isAuthenticated: boolean;
-}
 
-const ProductsPage: React.FC = () => {
-  const { isAuthenticated } = useContext(AuthContext) as AuthContextType;
+
+
+const Products: React.FC = () => {
+
   const [products, setProducts] = useState<ProductInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,11 +39,6 @@ const ProductsPage: React.FC = () => {
 
 
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/signin');
-    }
-  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -162,4 +154,4 @@ const ProductsPage: React.FC = () => {
   );
 };
 
-export default ProductsPage;
+export default Products;

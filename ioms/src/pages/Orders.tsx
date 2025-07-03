@@ -6,18 +6,13 @@ import {
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import fetchPaginatedOrders, { deleteOrder } from '../services/api'; 
-import type { Order } from '../services/api';
+import type { Order,AuthContextType } from '../interface/interface';
 import AddIcon from '@mui/icons-material/Add';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
 
 
-interface AuthContextType {
-    isAuthenticated: boolean;
-}
 
-const OrdersPage: React.FC = () => {
-  const { isAuthenticated } = useContext(AuthContext) as AuthContextType;
+
+const Orders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -47,17 +42,6 @@ const OrdersPage: React.FC = () => {
   };
   
 
- 
-
-
-
-
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/signin');
-    }
-  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     const loadOrders = async () => {
@@ -187,4 +171,4 @@ const OrdersPage: React.FC = () => {
   );
 };
 
-export default OrdersPage;
+export default Orders;

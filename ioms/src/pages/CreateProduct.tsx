@@ -5,20 +5,17 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { createProduct } from '../services/api';
-import type { ProductInfo } from '../services/api';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import type { ProductInfo} from '../interface/interface';
 
-interface AuthContextType {
-  isAuthenticated: boolean;
-}
+
+
 
 
 type CreateProductData = Omit<ProductInfo, 'id'>;
 
 const CreateProduct: React.FC = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useContext(AuthContext) as AuthContextType;
+
 
   const [formData, setFormData] = useState<CreateProductData>({
     name: '',
@@ -28,11 +25,7 @@ const CreateProduct: React.FC = () => {
     active: true, 
   });
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/signin');
-    }
-  }, [isAuthenticated, navigate]);
+
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

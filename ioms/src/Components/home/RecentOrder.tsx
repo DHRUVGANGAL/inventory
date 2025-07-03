@@ -14,9 +14,9 @@ import {
 } from '@mui/material';
 
 import { fetchRecentOrders } from '../../services/api';
-import type { Order } from '../../services/api';
+import type { Order } from '../../interface/interface';
 
-const RecentOrdersTable: React.FC = () => {
+const RecentOrders: React.FC = () => {
  
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -117,4 +117,4 @@ const RecentOrdersTable: React.FC = () => {
   );
 };
 
-export default RecentOrdersTable;
+export default RecentOrders;

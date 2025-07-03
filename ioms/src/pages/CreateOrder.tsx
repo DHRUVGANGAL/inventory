@@ -7,7 +7,7 @@ import {
   Tooltip, InputAdornment, alpha, AppBar, Toolbar, Container
 } from '@mui/material';
 import { createOrder, fetchCustomer, fetchProducts, fetchCustomerDetails } from '../services/api';
-import type { Customer, ProductInfo } from '../services/api';
+import type { Customer, ProductInfo,OrderItemId } from '../interface/interface';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonIcon from '@mui/icons-material/Person';
@@ -19,20 +19,15 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-interface OrderItem {
-  product: number;
-  product_name: string;
-  product_price: string | number;
-  quantity: number;
-}
+
 
 interface FormValues {
   customer: Customer | null;
   status: string;
-  items: OrderItem[];
+  items: OrderItemId[];
 }
 
-const CreateOrderPage: React.FC = () => {
+const CreateOrder: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -117,7 +112,7 @@ const CreateOrderPage: React.FC = () => {
 
   const handleAddItem = () => {
     if (selectedProduct && !formik.values.items.some(item => item.product === selectedProduct.id)) {
-      const newItem: OrderItem = {
+      const newItem: OrderItemId = {
         product: selectedProduct.id,
         product_name: selectedProduct.name,
         product_price: selectedProduct.price,
@@ -286,6 +281,6 @@ const CreateOrderPage: React.FC = () => {
   );
 };
 
-export default CreateOrderPage;
+export default CreateOrder;
 
 

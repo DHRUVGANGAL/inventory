@@ -3,5 +3,27 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+
+    "target": "ESNext",
+
+    "module": "ESNext",
+
+    "strict": true,
+
+    "moduleResolution": "Node",
+
+    "esModuleInterop": true,
+
+    "jsx": "react-jsx"
+
+  }
+
+
+
+  
 }
+
+
+

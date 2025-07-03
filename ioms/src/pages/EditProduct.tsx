@@ -19,19 +19,16 @@ import {
 } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { updateProduct, fetchProductDetails } from '../services/api';
-import type { ProductInfo } from '../services/api';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import type { ProductInfo } from '../interface/interface';
 
-interface AuthContextType {
-  isAuthenticated: boolean;
-}
 
-const EditProductPage: React.FC = () => {
+
+
+const EditProduct: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const theme = useTheme();
-  const { isAuthenticated } = useContext(AuthContext) as AuthContextType;
+
 
   const [formData, setFormData] = useState<Partial<ProductInfo>>({
     name: '',
@@ -46,11 +43,7 @@ const EditProductPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/signin');
-    }
-  }, [isAuthenticated, navigate]);
+
 
   useEffect(() => {
     if (!id) {
@@ -411,4 +404,4 @@ const EditProductPage: React.FC = () => {
   );
 };
 
-export default EditProductPage;
+export default EditProduct;

@@ -16,9 +16,9 @@ import {
 } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchCustomers, updateCustomer } from '../services/api';
-import type { CustomerFormData } from '../services/api';
+import type { CustomerFormData } from '../interface/interface';
 
-const EditCustomerPage: React.FC = () => {
+const EditCustomer: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>(); 
   const theme = useTheme();
@@ -385,4 +385,4 @@ const EditCustomerPage: React.FC = () => {
   );
 };
 
-export default EditCustomerPage;
+export default EditCustomer;
